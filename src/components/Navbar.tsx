@@ -137,7 +137,7 @@ const Navbar = () => {
                 className={`font-light ml-1 group-hover:text-amber-200 transition-colors duration-300 ${
                   isScrolled || isMobileMenuOpen
                     ? "text-white"
-                    : "text-teal-950"
+                    : "text-teal-600"
                 }`}
               >
                 RUGS
@@ -187,7 +187,11 @@ const Navbar = () => {
               whileHover={{ scale: 1.15, rotate: 5 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="text-emerald-100/70 hover:text-amber-400 transition-colors"
+              className={`hover:text-amber-400 transition-colors ${
+                isScrolled || isMobileMenuOpen
+                  ? "text-emerald-100/70"
+                  : "text-teal-950"
+              }`}
             >
               <Search className="w-5 h-5 drop-shadow-md" />
             </motion.button>
@@ -195,7 +199,11 @@ const Navbar = () => {
               <motion.div
                 whileHover={{ scale: 1.15, rotate: -5 }}
                 whileTap={{ scale: 0.95 }}
-                className="text-emerald-100/70 hover:text-amber-400 transition-colors"
+                className={`hover:text-amber-400 transition-colors ${
+                  isScrolled || isMobileMenuOpen
+                    ? "text-emerald-100/70"
+                    : "text-teal-950"
+                }`}
               >
                 <User className="w-5 h-5 drop-shadow-md" />
               </motion.div>
@@ -205,7 +213,11 @@ const Navbar = () => {
                 whileHover={{ scale: 1.15, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsCartOpen(true)}
-                className="text-emerald-100/70 hover:text-amber-400 transition-colors"
+                className={`hover:text-amber-400 transition-colors ${
+                  isScrolled || isMobileMenuOpen
+                    ? "text-emerald-100/70"
+                    : "text-teal-950"
+                }`}
                 aria-label="Toggle cart"
               >
                 <ShoppingBag className="w-5 h-5 drop-shadow-md" />
@@ -224,7 +236,11 @@ const Navbar = () => {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden z-50 text-white hover:text-amber-400 transition-colors"
+            className={`md:hidden z-50 hover:text-amber-400 transition-colors ${
+              isScrolled || isMobileMenuOpen
+                ? "text-emerald-100/70"
+                : "text-teal-950"
+            }`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
