@@ -47,10 +47,12 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    setIsMobileMenuOpen(false); // Close menu on route change
-    setIsSearchOpen(false); // Close search
-  }, [location]);
+  const [prevPath, setPrevPath] = useState(location.pathname);
+  if (location.pathname !== prevPath) {
+    setPrevPath(location.pathname);
+    setIsMobileMenuOpen(false);
+    setIsSearchOpen(false);
+  }
 
   // Lock body scroll when cart or mobile menu is open
   useEffect(() => {
