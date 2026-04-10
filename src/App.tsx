@@ -1,13 +1,15 @@
-import Navbar from "./component/Navbar";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div className="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-800">
+    <div className="bg-teal-950 min-h-screen flex flex-col font-sans text-emerald-100 selection:bg-amber-400 selection:text-teal-950 transition-colors duration-500">
       <Navbar />
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-8">
+      <main className="flex-1 w-full flex flex-col">
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 }

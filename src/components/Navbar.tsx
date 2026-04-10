@@ -103,16 +103,14 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out px-4 sm:px-6 lg:px-8 ${
-          isScrolled || isMobileMenuOpen ? "py-4" : "py-6"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out px-4 sm:px-6 lg:px-8 ${isScrolled || isMobileMenuOpen ? "py-4" : "py-6"
+          }`}
       >
         <div
-          className={`max-w-7xl mx-auto flex justify-between items-center relative z-50 transition-all duration-500 px-6 ${
-            isScrolled || isMobileMenuOpen
+          className={`max-w-7xl mx-auto flex justify-between items-center relative z-50 transition-all duration-500 px-6 ${isScrolled || isMobileMenuOpen
               ? "bg-teal-950 rounded-2xl border-t border-l border-teal-600 border-b border-r border-black shadow-[4px_6px_20px_rgba(0,0,0,0.7),_inset_1px_2px_3px_rgba(255,255,255,0.2),_inset_-2px_-2px_4px_rgba(0,0,0,0.6)] py-3"
               : "bg-transparent py-2"
-          }`}
+            }`}
         >
           {/* Logo */}
           <Link
@@ -124,7 +122,7 @@ const Navbar = () => {
               transition={{ duration: 0.6, ease: "easeInOut" }}
               className="w-10 h-10 bg-gradient-to-br from-amber-400 to-yellow-600 rounded-lg flex items-center justify-center border-t border-l border-amber-200 border-b border-r border-yellow-800 shadow-[2px_3px_8px_rgba(0,0,0,0.5),_inset_1px_1px_2px_rgba(255,255,255,0.4)]"
             >
-              <span className="text-teal-950 text-2xl font-extrabold drop-shadow-sm">
+              <span className={`text-2xl font-extrabold drop-shadow-sm ${isScrolled || isMobileMenuOpen ? "text-teal-950" : "text-yellow-900"}`}>
                 M
               </span>
             </motion.div>
@@ -137,7 +135,7 @@ const Navbar = () => {
                 className={`font-light ml-1 group-hover:text-amber-200 transition-colors duration-300 ${
                   isScrolled || isMobileMenuOpen
                     ? "text-white"
-                    : "text-teal-600"
+                    : "text-yellow-600"
                 }`}
               >
                 RUGS
@@ -147,108 +145,98 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex gap-10 items-center font-medium">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className="relative text-sm tracking-widest uppercase group py-2"
-              >
-                <span
-                  className={`transition-colors duration-300 ${
-                    location.pathname === link.path
-                      ? "text-amber-400 font-black drop-shadow-md"
-                      : "text-emerald-100/70 group-hover:text-white"
-                  }
-                  ${
-                    isScrolled || isMobileMenuOpen
-                      ? "text-white"
-                      : "text-teal-950"
-                  }
-                  `}
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className="relative text-sm tracking-widest uppercase group py-2"
                 >
-                  {link.name}
-                </span>
-                {location.pathname === link.path && (
-                  <motion.div
-                    layoutId="underline"
-                    className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full shadow-[0_2px_5px_rgba(251,191,36,0.6)]"
-                  />
-                )}
-                {location.pathname !== link.path && (
-                  <div className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                )}
-              </Link>
-            ))}
-          </nav>
+                  <span
+                    className={`transition-colors duration-300 ${location.pathname === link.path
+                        ? "font-black drop-shadow-md " + (isScrolled || isMobileMenuOpen ? "text-amber-400" : "text-yellow-600")
+                        : "group-hover:text-amber-400 " + (isScrolled || isMobileMenuOpen ? "text-emerald-100/70" : "text-yellow-600/80")
+                      }
+                  `}
+                  >
+                    {link.name}
+                  </span>
+                  {location.pathname === link.path && (
+                    <motion.div
+                      layoutId="underline"
+                      className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full shadow-[0_2px_5px_rgba(251,191,36,0.6)]"
+                    />
+                  )}
+                  {location.pathname !== link.path && (
+                    <div className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  )}
+                </Link>
+              ))}
+            </nav>
 
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-6">
-            <motion.button
-              whileHover={{ scale: 1.15, rotate: 5 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className={`hover:text-amber-400 transition-colors ${
-                isScrolled || isMobileMenuOpen
-                  ? "text-emerald-100/70"
-                  : "text-teal-950"
-              }`}
-            >
-              <Search className="w-5 h-5 drop-shadow-md" />
-            </motion.button>
-            <Link to="/profile">
-              <motion.div
-                whileHover={{ scale: 1.15, rotate: -5 }}
-                whileTap={{ scale: 0.95 }}
-                className={`hover:text-amber-400 transition-colors ${
-                  isScrolled || isMobileMenuOpen
-                    ? "text-emerald-100/70"
-                    : "text-teal-950"
-                }`}
-              >
-                <User className="w-5 h-5 drop-shadow-md" />
-              </motion.div>
-            </Link>
-            <div className="relative">
+            {/* Desktop Actions */}
+            <div className="hidden md:flex items-center gap-6">
               <motion.button
                 whileHover={{ scale: 1.15, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setIsCartOpen(true)}
-                className={`hover:text-amber-400 transition-colors ${
-                  isScrolled || isMobileMenuOpen
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                className={`hover:text-amber-400 transition-colors ${isScrolled || isMobileMenuOpen
                     ? "text-emerald-100/70"
-                    : "text-teal-950"
-                }`}
-                aria-label="Toggle cart"
+                    : "text-yellow-600"
+                  }`}
               >
-                <ShoppingBag className="w-5 h-5 drop-shadow-md" />
+                <Search className="w-5 h-5 drop-shadow-md" />
               </motion.button>
-              {cartCount > 0 && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -top-2 -right-3 bg-gradient-to-br from-amber-400 to-yellow-600 border border-teal-950 text-teal-950 text-[10px] font-black px-1.5 min-w-[20px] h-5 rounded-full flex items-center justify-center shadow-[2px_2px_5px_rgba(0,0,0,0.5),_inset_1px_1px_1px_rgba(255,255,255,0.4)]"
+              <Link to="/profile">
+                <motion.div
+                  whileHover={{ scale: 1.15, rotate: -5 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`hover:text-amber-400 transition-colors ${isScrolled || isMobileMenuOpen
+                      ? "text-emerald-100/70"
+                      : "text-yellow-600"
+                    }`}
                 >
-                  {cartCount}
-                </motion.span>
-              )}
+                  <User className="w-5 h-5 drop-shadow-md" />
+                </motion.div>
+              </Link>
+              <div className="relative">
+                <motion.button
+                  whileHover={{ scale: 1.15, rotate: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setIsCartOpen(true)}
+                  className={`hover:text-amber-400 transition-colors ${isScrolled || isMobileMenuOpen
+                      ? "text-emerald-100/70"
+                      : "text-yellow-600"
+                    }`}
+                  aria-label="Toggle cart"
+                >
+                  <ShoppingBag className="w-5 h-5 drop-shadow-md" />
+                </motion.button>
+                {cartCount > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-2 -right-3 bg-gradient-to-br from-amber-400 to-yellow-600 border border-teal-950 text-teal-950 text-[10px] font-black px-1.5 min-w-[20px] h-5 rounded-full flex items-center justify-center shadow-[2px_2px_5px_rgba(0,0,0,0.5),_inset_1px_1px_1px_rgba(255,255,255,0.4)]"
+                  >
+                    {cartCount}
+                  </motion.span>
+                )}
+              </div>
             </div>
-          </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            className={`md:hidden z-50 hover:text-amber-400 transition-colors ${
-              isScrolled || isMobileMenuOpen
-                ? "text-emerald-100/70"
-                : "text-teal-950"
-            }`}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-7 h-7 drop-shadow-md" />
-            ) : (
-              <Menu className="w-7 h-7 drop-shadow-md" />
-            )}
-          </button>
+            {/* Mobile Menu Toggle */}
+            <button
+              className={`md:hidden z-50 hover:text-amber-400 transition-colors ${isScrolled || isMobileMenuOpen
+                  ? "text-emerald-100/70"
+                  : "text-yellow-600"
+                }`}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-7 h-7 drop-shadow-md" />
+              ) : (
+                <Menu className="w-7 h-7 drop-shadow-md" />
+              )}
+            </button>
         </div>
 
         {/* Search Bar Dropdown */}
@@ -322,11 +310,10 @@ const Navbar = () => {
                 >
                   <Link
                     to={link.path}
-                    className={`${
-                      location.pathname === link.path
+                    className={`${location.pathname === link.path
                         ? "text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-yellow-500 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
                         : "text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
-                    } hover:text-amber-300 transition-colors inline-block`}
+                      } hover:text-amber-300 transition-colors inline-block`}
                   >
                     {link.name}
                   </Link>
