@@ -1,26 +1,29 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Filter, ChevronDown, Star, ShoppingCart } from 'lucide-react';
-
-const products = [
-  { id: 1, name: "Isfahan Silk Blend", category: "Persian", price: 1299, image: "https://images.unsplash.com/photo-1534889156217-d643df14f14a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", rating: 5, isNew: true },
-  { id: 2, name: "Nordic Geometric", category: "Modern", price: 499, image: "https://images.unsplash.com/photo-1596401053423-f3c5b967d716?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", rating: 4, isNew: false },
-  { id: 3, name: "Marrakech Runner", category: "Runner", price: 349, image: "https://images.unsplash.com/photo-1543854589-32867c295ce8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", rating: 5, isNew: false },
-  { id: 4, name: "Oushak Vintage", category: "Vintage", price: 899, image: "https://images.unsplash.com/photo-1582582621959-48d27397dc69?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", rating: 5, isNew: true },
-  { id: 5, name: "Anatolian Wool", category: "Vintage", price: 650, image: "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", rating: 4, isNew: false },
-  { id: 6, name: "Minimalist Cream", category: "Modern", price: 299, image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", rating: 4, isNew: false },
-  { id: 7, name: "Heriz Medallion", category: "Persian", price: 1550, image: "https://images.unsplash.com/photo-1600166898405-da9535204843?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", rating: 5, isNew: false },
-  { id: 8, name: "Jute Braided", category: "Outdoor", price: 150, image: "https://plus.unsplash.com/premium_photo-1673827409418-508b9cd2aa4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", rating: 3, isNew: true }
-];
+import { Filter, ChevronDown, Star, ShoppingCart, Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useStore } from '../context/StoreContext';
+import { products } from '../data/products';
 
 const categories = ["All", "Persian", "Modern", "Vintage", "Runner", "Outdoor"];
 
 const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useStore();
+  const navigate = useNavigate();
 
   const filteredProducts = selectedCategory === "All" 
     ? products 
     : products.filter(p => p.category === selectedCategory);
+
+  const toggleWishlist = (product: any, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-8 bg-teal-950 text-emerald-100 min-h-screen pt-32 pb-16 px-4 sm:px-6 lg:px-8">
@@ -114,10 +117,22 @@ const Shop = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   key={product.id} 
+                  onClick={() => navigate(`/product/${product.id}`)}
                   className="group flex flex-col cursor-pointer bg-teal-900 rounded-[2rem] p-3 border-t-2 border-l-2 border-teal-700 border-b-2 border-r-2 border-black shadow-[4px_6px_15px_rgba(0,0,0,0.6),_inset_1px_1px_2px_rgba(255,255,255,0.1)] hover:border-amber-500/50 hover:shadow-[0_0_25px_rgba(251,191,36,0.2)] transition-all duration-300"
                 >
                   <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] mb-5 bg-teal-950 border-t-2 border-l-2 border-black border-b-2 border-r-2 border-teal-800 shadow-[inset_4px_4px_10px_rgba(0,0,0,0.8)]">
                     <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-90 group-hover:opacity-100 mix-blend-luminosity hover:mix-blend-normal" />
+                    
+                    {/* Wishlist Button */}
+                    <button 
+                      onClick={(e) => toggleWishlist(product, e)}
+                      className="absolute top-4 left-4 p-2 rounded-full bg-teal-950/80 backdrop-blur-md border border-teal-700/50 hover:bg-teal-900 transition-colors z-20 group/wish"
+                    >
+                      <Heart 
+                        className={`w-5 h-5 transition-colors ${isInWishlist(product.id) ? 'fill-amber-400 text-amber-400' : 'text-emerald-100/70 group-hover/wish:text-amber-400'}`} 
+                      />
+                    </button>
+
                     {product.isNew && (
                       <div className="absolute top-4 right-4 bg-gradient-to-br from-amber-400 to-yellow-600 text-teal-950 px-4 py-1.5 rounded-full text-xs font-black border-t border-l border-amber-200 border-b border-r border-yellow-800 shadow-[2px_3px_8px_rgba(0,0,0,0.7),_inset_1px_1px_2px_rgba(255,255,255,0.4)] z-10 tracking-widest">
                         NEW
@@ -125,7 +140,13 @@ const Shop = () => {
                     )}
                     {/* Quick Add Overlay */}
                     <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300 z-10">
-                      <button className="w-full bg-gradient-to-br from-amber-400 to-yellow-600 text-teal-950 border-t border-l border-amber-200 border-b border-r border-yellow-800 shadow-[4px_4px_15px_rgba(0,0,0,0.6),_inset_2px_2px_5px_rgba(255,255,255,0.4)] rounded-xl py-3.5 font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-transform">
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToCart(product);
+                        }}
+                        className="w-full bg-gradient-to-br from-amber-400 to-yellow-600 text-teal-950 border-t border-l border-amber-200 border-b border-r border-yellow-800 shadow-[4px_4px_15px_rgba(0,0,0,0.6),_inset_2px_2px_5px_rgba(255,255,255,0.4)] rounded-xl py-3.5 font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-transform"
+                      >
                         <ShoppingCart className="w-5 h-5 drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]" /> Add to Cart
                       </button>
                     </div>

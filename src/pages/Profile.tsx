@@ -1,8 +1,14 @@
 
 import { motion } from "framer-motion";
 import { User, Package, Heart, LogOut, Settings, CreditCard, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useStore } from "../context/StoreContext";
+import { useAuth } from "../context/AuthContext";
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const { wishlist, cartItems } = useStore();
+  const { logout } = useAuth();
   const user = {
     name: "John Doe",
     email: "john.doe@example.com",
@@ -12,7 +18,7 @@ const Profile = () => {
 
   const menuItems = [
     { icon: <Package className="w-5 h-5" />, label: "My Orders", path: "/orders", badge: "2" },
-    { icon: <Heart className="w-5 h-5" />, label: "Wishlist", path: "/wishlist", badge: "5" },
+    { icon: <Heart className="w-5 h-5" />, label: "Wishlist", path: "/wishlist", badge: wishlist.length > 0 ? String(wishlist.length) : undefined },
     { icon: <CreditCard className="w-5 h-5" />, label: "Payment Methods", path: "/payments" },
     { icon: <Settings className="w-5 h-5" />, label: "Settings", path: "/settings" },
   ];
@@ -60,13 +66,13 @@ const Profile = () => {
             
             <div className="grid gap-4">
               {menuItems.map((item, index) => (
-                <motion.a
+                <motion.div
                   key={item.label}
-                  href={item.path}
+                  onClick={() => navigate(item.path)}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-teal-800 border border-transparent hover:border-teal-700/50 transition-all group shadow-none hover:shadow-[inset_1px_1px_2px_rgba(255,255,255,0.05),_4px_4px_10px_rgba(0,0,0,0.3)]"
+                  className="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-teal-800 border border-transparent hover:border-teal-700/50 transition-all group shadow-none hover:shadow-[inset_1px_1px_2px_rgba(255,255,255,0.05),_4px_4px_10px_rgba(0,0,0,0.3)] cursor-pointer"
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-xl bg-teal-950 flex items-center justify-center text-emerald-100/70 border-t border-l border-black border-b border-r border-teal-800 group-hover:border-amber-200 group-hover:bg-gradient-to-br group-hover:from-amber-400 group-hover:to-yellow-600 group-hover:text-teal-950 transition-all shadow-[inset_2px_2px_5px_rgba(0,0,0,0.6)] group-hover:shadow-[2px_2px_5px_rgba(0,0,0,0.5)]">
@@ -84,12 +90,12 @@ const Profile = () => {
                     )}
                     <ChevronRight className="w-5 h-5 text-emerald-100/30 group-hover:text-amber-400 transition-colors group-hover:translate-x-1" />
                   </div>
-                </motion.a>
+                </motion.div>
               ))}
             </div>
 
             <div className="mt-10 pt-8 border-t border-teal-800 border-dashed">
-              <button className="flex items-center justify-center gap-3 text-red-400 hover:text-red-300 font-bold transition-all px-6 py-4 hover:bg-red-950/30 rounded-xl w-full sm:w-auto border border-transparent hover:border-red-900 shadow-none hover:shadow-inner">
+              <button onClick={() => logout()} className="flex items-center justify-center gap-3 text-red-400 hover:text-red-300 font-bold transition-all px-6 py-4 hover:bg-red-950/30 rounded-xl w-full sm:w-auto border border-transparent hover:border-red-900 shadow-none hover:shadow-inner">
                 <LogOut className="w-5 h-5" />
                 Sign Out
               </button>

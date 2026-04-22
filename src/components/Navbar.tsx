@@ -11,35 +11,27 @@ import {
   Minus,
   Plus,
   MessageCircle,
+  Heart,
 } from "lucide-react";
+import { useStore } from "../context/StoreContext";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
 
-  // Mock cart data
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Premium Wool Carpet",
-      price: 299,
-      image:
-        "https://images.unsplash.com/photo-1595428774223-ef52624120ec?q=80&w=150&auto=format&fit=crop",
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: "Modern Geometric Rug",
-      price: 149,
-      image:
-        "https://images.unsplash.com/photo-1600166898405-da9535204843?q=80&w=150&auto=format&fit=crop",
-      quantity: 2,
-    },
-  ]);
+  const { 
+    cartItems, 
+    updateQuantity, 
+    removeFromCart: removeItem, 
+    cartTotal, 
+    cartCount, 
+    isCartOpen, 
+    setIsCartOpen,
+    wishlist
+  } = useStore();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -71,28 +63,6 @@ const Navbar = () => {
     { name: "Shop", path: "/shop" },
     { name: "About", path: "/about" },
   ];
-
-  const cartTotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0,
-  );
-  const cartCount = cartItems.reduce((count, item) => count + item.quantity, 0);
-
-  const updateQuantity = (id: number, delta: number) => {
-    setCartItems((prev) =>
-      prev.map((item) => {
-        if (item.id === id) {
-          const newQuantity = Math.max(1, item.quantity + delta);
-          return { ...item, quantity: newQuantity };
-        }
-        return item;
-      }),
-    );
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
-  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -186,6 +156,7 @@ const Navbar = () => {
               >
                 <Search className="w-5 h-5 drop-shadow-md" />
               </motion.button>
+
               <Link to="/profile">
                 <motion.div
                   whileHover={{ scale: 1.15, rotate: -5 }}
@@ -197,6 +168,29 @@ const Navbar = () => {
                 >
                   <User className="w-5 h-5 drop-shadow-md" />
                 </motion.div>
+              </Link>
+              <Link to="/wishlist">
+                <div className="relative">
+                  <motion.div
+                    whileHover={{ scale: 1.15, rotate: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`hover:text-amber-400 transition-colors ${isScrolled || isMobileMenuOpen
+                        ? "text-emerald-100/70"
+                        : "text-yellow-600"
+                      }`}
+                  >
+                    <Heart className="w-5 h-5 drop-shadow-md" />
+                  </motion.div>
+                  {wishlist.length > 0 && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute -top-2 -right-3 bg-gradient-to-br from-amber-400 to-yellow-600 border border-teal-950 text-teal-950 text-[10px] font-black px-1.5 min-w-[20px] h-5 rounded-full flex items-center justify-center shadow-[2px_2px_5px_rgba(0,0,0,0.5),_inset_1px_1px_1px_rgba(255,255,255,0.4)]"
+                    >
+                      {wishlist.length}
+                    </motion.span>
+                  )}
+                </div>
               </Link>
               <div className="relative">
                 <motion.button

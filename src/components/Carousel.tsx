@@ -1,52 +1,16 @@
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star, ShoppingBag } from "lucide-react";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useStore } from "../context/StoreContext";
+import { products } from "../data/products";
 
-const products = [
-  {
-    id: 1,
-    name: "Persian Heritage",
-    price: "$2,499",
-    tag: "Bestseller",
-    image:
-      "https://plus.unsplash.com/premium_photo-1675183689526-231e7da8afbb?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 2,
-    name: "Modern Minimalist",
-    price: "$1,899",
-    tag: "New Arrival",
-    image:
-      "https://images.unsplash.com/photo-1600166898405-da9535204843?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: 3,
-    name: "Vintage Anatolian",
-    price: "$3,100",
-    tag: "Masterpiece",
-    image:
-      "https://plus.unsplash.com/premium_photo-1755783616131-c0ee02053313?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 4,
-    name: "Abstract Azure",
-    price: "$1,250",
-    tag: "Trending",
-    image:
-      "https://images.unsplash.com/photo-1714926618653-39de3cf5b691?q=80&w=327&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    id: 5,
-    name: "Nomadic Wool",
-    price: "$899",
-    tag: "Classic",
-    image:
-      "https://images.unsplash.com/photo-1766663769869-359d473a0f37?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
+const carouselProducts = products.slice(0, 5);
 
 const Carousel = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const { addToCart } = useStore();
 
   const scrollLeft = () => {
     if (carouselRef.current) {
@@ -110,7 +74,7 @@ const Carousel = () => {
           className="flex gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-10 pt-4 px-4 -mx-4"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {products.map((product, index) => (
+          {carouselProducts.map((product, index) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, y: 50 }}
@@ -134,12 +98,15 @@ const Carousel = () => {
 
                   {/* Tag */}
                   <div className="absolute top-4 left-4 z-20 px-3 py-1 bg-gradient-to-br from-amber-400 to-yellow-600 rounded-lg text-teal-950 font-bold text-xs uppercase tracking-widest border-t border-l border-amber-200 border-b border-r border-yellow-800 shadow-[2px_3px_8px_rgba(0,0,0,0.6)]">
-                    {product.tag}
+                    {product.isNew ? "New Arrival" : "Bestseller"}
                   </div>
 
                   {/* Hover Overlay Button */}
                   <div className="absolute inset-0 bg-teal-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-center justify-center backdrop-blur-[2px]">
-                    <button className="px-6 py-3 bg-teal-900/90 text-amber-400 font-bold rounded-xl border-t border-l border-teal-700 border-b border-r border-black shadow-[0_5px_15px_rgba(0,0,0,0.5)] flex items-center gap-2 hover:bg-gradient-to-br hover:from-amber-400 hover:to-yellow-600 hover:text-teal-950 hover:border-amber-200 hover:border-b-yellow-800 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
+                    <button 
+                      onClick={() => navigate(`/product/${product.id}`)}
+                      className="px-6 py-3 bg-teal-900/90 text-amber-400 font-bold rounded-xl border-t border-l border-teal-700 border-b border-r border-black shadow-[0_5px_15px_rgba(0,0,0,0.5)] flex items-center gap-2 hover:bg-gradient-to-br hover:from-amber-400 hover:to-yellow-600 hover:text-teal-950 hover:border-amber-200 hover:border-b-yellow-800 transition-all duration-300 translate-y-4 group-hover:translate-y-0"
+                    >
                       <ShoppingBag className="w-5 h-5" />
                       View Details
                     </button>
@@ -170,9 +137,12 @@ const Carousel = () => {
 
                   <div className="flex items-center justify-between mt-auto">
                     <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-yellow-600 drop-shadow-[0_2px_3px_rgba(0,0,0,0.6)]">
-                      {product.price}
+                      ${product.price}
                     </span>
-                    <button className="w-12 h-12 rounded-xl bg-teal-950 border-t border-l border-teal-800 border-b border-r border-black flex items-center justify-center text-amber-500 hover:text-emerald-100 hover:bg-teal-800 transition-all shadow-[inset_1px_1px_3px_rgba(0,0,0,0.8),_2px_3px_6px_rgba(0,0,0,0.4)] hover:shadow-[inset_1px_1px_2px_rgba(255,255,255,0.1),_4px_6px_10px_rgba(0,0,0,0.6)]">
+                    <button 
+                      onClick={() => addToCart(product)}
+                      className="w-12 h-12 rounded-xl bg-teal-950 border-t border-l border-teal-800 border-b border-r border-black flex items-center justify-center text-amber-500 hover:text-emerald-100 hover:bg-teal-800 transition-all shadow-[inset_1px_1px_3px_rgba(0,0,0,0.8),_2px_3px_6px_rgba(0,0,0,0.4)] hover:shadow-[inset_1px_1px_2px_rgba(255,255,255,0.1),_4px_6px_10px_rgba(0,0,0,0.6)]"
+                    >
                       <ShoppingBag className="w-5 h-5" />
                     </button>
                   </div>
