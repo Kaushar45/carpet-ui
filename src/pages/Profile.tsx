@@ -1,26 +1,51 @@
-
 import { motion } from "framer-motion";
-import { User, Package, Heart, LogOut, Settings, CreditCard, ChevronRight } from "lucide-react";
+import {
+  User,
+  Package,
+  Heart,
+  LogOut,
+  Settings,
+  CreditCard,
+  ChevronRight,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../context/StoreContext";
 import { useAuth } from "../context/AuthContext";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { wishlist, cartItems } = useStore();
+  const { wishlist } = useStore();
   const { logout } = useAuth();
   const user = {
     name: "John Doe",
     email: "john.doe@example.com",
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    joined: "Member since Oct 2023"
+    joined: "Member since Oct 2023",
   };
 
   const menuItems = [
-    { icon: <Package className="w-5 h-5" />, label: "My Orders", path: "/orders", badge: "2" },
-    { icon: <Heart className="w-5 h-5" />, label: "Wishlist", path: "/wishlist", badge: wishlist.length > 0 ? String(wishlist.length) : undefined },
-    { icon: <CreditCard className="w-5 h-5" />, label: "Payment Methods", path: "/payments" },
-    { icon: <Settings className="w-5 h-5" />, label: "Settings", path: "/settings" },
+    {
+      icon: <Package className="w-5 h-5" />,
+      label: "My Orders",
+      path: "/orders",
+      badge: "2",
+    },
+    {
+      icon: <Heart className="w-5 h-5" />,
+      label: "Wishlist",
+      path: "/wishlist",
+      badge: wishlist.length > 0 ? String(wishlist.length) : undefined,
+    },
+    {
+      icon: <CreditCard className="w-5 h-5" />,
+      label: "Payment Methods",
+      path: "/payments",
+    },
+    {
+      icon: <Settings className="w-5 h-5" />,
+      label: "Settings",
+      path: "/settings",
+    },
   ];
 
   return (
@@ -36,9 +61,9 @@ const Profile = () => {
             <div className="flex flex-col md:flex-row items-center gap-6">
               <div className="relative">
                 <div className="w-24 h-24 rounded-full border-2 border-teal-700 shadow-[inset_2px_2px_10px_rgba(0,0,0,0.8),_0_4px_10px_rgba(0,0,0,0.6)] overflow-hidden bg-teal-950">
-                  <img 
-                    src={user.avatar} 
-                    alt={user.name} 
+                  <img
+                    src={user.avatar}
+                    alt={user.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -47,9 +72,16 @@ const Profile = () => {
                 </button>
               </div>
               <div className="text-center md:text-left">
-                <h1 style={{ fontFamily: "'Playfair Display', serif" }} className="text-3xl font-black drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">{user.name}</h1>
+                <h1
+                  style={{ fontFamily: "'Playfair Display', serif" }}
+                  className="text-3xl font-black drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
+                >
+                  {user.name}
+                </h1>
                 <p className="text-emerald-100/70 font-medium">{user.email}</p>
-                <p className="text-sm text-amber-400/80 mt-1 uppercase tracking-wider font-bold text-[10px]">{user.joined}</p>
+                <p className="text-sm text-amber-400/80 mt-1 uppercase tracking-wider font-bold text-[10px]">
+                  {user.joined}
+                </p>
               </div>
             </div>
             <button className="px-6 py-3 bg-teal-800 hover:bg-teal-700 text-white rounded-xl font-bold transition-colors border-t border-l border-teal-600 border-b border-r border-black shadow-[2px_2px_5px_rgba(0,0,0,0.5)] active:shadow-[inset_2px_2px_5px_rgba(0,0,0,0.6)]">
@@ -63,7 +95,7 @@ const Profile = () => {
               <span className="w-6 h-[2px] bg-amber-400 inline-block shadow-[0_0_5px_rgba(251,191,36,0.8)]" />
               Account Settings
             </h2>
-            
+
             <div className="grid gap-4">
               {menuItems.map((item, index) => (
                 <motion.div
@@ -95,7 +127,10 @@ const Profile = () => {
             </div>
 
             <div className="mt-10 pt-8 border-t border-teal-800 border-dashed">
-              <button onClick={() => logout()} className="flex items-center justify-center gap-3 text-red-400 hover:text-red-300 font-bold transition-all px-6 py-4 hover:bg-red-950/30 rounded-xl w-full sm:w-auto border border-transparent hover:border-red-900 shadow-none hover:shadow-inner">
+              <button
+                onClick={() => logout()}
+                className="flex items-center justify-center gap-3 text-red-400 hover:text-red-300 font-bold transition-all px-6 py-4 hover:bg-red-950/30 rounded-xl w-full sm:w-auto border border-transparent hover:border-red-900 shadow-none hover:shadow-inner"
+              >
                 <LogOut className="w-5 h-5" />
                 Sign Out
               </button>
