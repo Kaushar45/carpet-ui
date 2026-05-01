@@ -9,12 +9,21 @@ const categories = ["All", "Persian", "Modern", "Vintage", "Runner", "Outdoor"];
 
 const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [sortBy, setSortBy] = useState("Recommended");
   const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useStore();
   const navigate = useNavigate();
 
-  const filteredProducts = selectedCategory === "All" 
-    ? products 
+  let filteredProducts = selectedCategory === "All" 
+    ? [...products] 
     : products.filter(p => p.category === selectedCategory);
+
+  if (sortBy === "Price: Low to High") {
+    filteredProducts.sort((a, b) => a.price - b.price);
+  } else if (sortBy === "Price: High to Low") {
+    filteredProducts.sort((a, b) => b.price - a.price);
+  } else if (sortBy === "Newest Arrivals") {
+    filteredProducts.sort((a, b) => (a.isNew === b.isNew ? 0 : a.isNew ? -1 : 1));
+  }
 
   const toggleWishlist = (product: any, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -87,11 +96,15 @@ const Shop = () => {
                 <div className="pt-2">
                   <h3 className="font-bold text-sm uppercase tracking-widest text-amber-400/80 mb-5 border-b border-teal-800 pb-2">Sort By</h3>
                   <div className="relative">
-                    <select className="appearance-none w-full bg-teal-950 text-white border-t border-l border-black border-b border-r border-teal-800 rounded-xl px-4 py-4 text-sm font-bold focus:outline-none focus:border-amber-400 pr-10 cursor-pointer shadow-[inset_2px_2px_5px_rgba(0,0,0,0.6)] transition-all">
-                      <option>Recommended</option>
-                      <option>Price: Low to High</option>
-                      <option>Price: High to Low</option>
-                      <option>Newest Arrivals</option>
+                    <select 
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                      className="appearance-none w-full bg-teal-950 text-white border-t border-l border-black border-b border-r border-teal-800 rounded-xl px-4 py-4 text-sm font-bold focus:outline-none focus:border-amber-400 pr-10 cursor-pointer shadow-[inset_2px_2px_5px_rgba(0,0,0,0.6)] transition-all"
+                    >
+                      <option value="Recommended">Recommended</option>
+                      <option value="Price: Low to High">Price: Low to High</option>
+                      <option value="Price: High to Low">Price: High to Low</option>
+                      <option value="Newest Arrivals">Newest Arrivals</option>
                     </select>
                     <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-amber-400 pointer-events-none drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
                   </div>

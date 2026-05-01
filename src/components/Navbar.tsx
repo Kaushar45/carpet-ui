@@ -10,7 +10,7 @@ import {
   Trash2,
   Minus,
   Plus,
-  MessageCircle,
+
   Heart,
 } from "lucide-react";
 import { useStore } from "../context/StoreContext";
@@ -520,17 +520,6 @@ const Navbar = () => {
         )}
       </AnimatePresence>
 
-      {/* AI Concierge Floating Button */}
-      <motion.button
-        whileHover={{ scale: 1.15, rotate: 10 }}
-        whileTap={{ scale: 0.9 }}
-        className="fixed bottom-8 right-8 z-[200] w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-yellow-600 border-t border-l border-amber-200 border-b border-r border-yellow-800 shadow-[5px_5px_20px_rgba(0,0,0,0.6),_inset_2px_2px_5px_rgba(255,255,255,0.5)] flex items-center justify-center text-teal-950 transition-all duration-300"
-        aria-label="Open AI Concierge"
-        tabIndex={0}
-      >
-        <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-teal-950 shadow-[0_2px_5px_rgba(0,0,0,0.5)] animate-[pulse_2s_ease-in-out_infinite]"></span>
-        <MessageCircle className="w-7 h-7 drop-shadow-[0_2px_2px_rgba(255,255,255,0.4)]" />
-      </motion.button>
     </>
   );
 };

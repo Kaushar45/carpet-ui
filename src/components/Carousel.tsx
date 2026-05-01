@@ -85,7 +85,10 @@ const Carousel = () => {
               className="min-w-[320px] max-w-[320px] md:min-w-[400px] md:max-w-[400px] snap-center snap-always relative group cursor-grab active:cursor-grabbing"
             >
               {/* Premium 3D Card wrapper */}
-              <div className="bg-teal-900 rounded-3xl p-3 border-t-2 border-l-2 border-teal-700 border-b-2 border-r-2 border-black shadow-[10px_15px_30px_rgba(0,0,0,0.7),_inset_1px_1px_3px_rgba(255,255,255,0.1)] h-full flex flex-col">
+              <div
+                onClick={() => navigate(`/product/${product.id}`)}
+                className="bg-teal-900 rounded-3xl p-3 border-t-2 border-l-2 border-teal-700 border-b-2 border-r-2 border-black shadow-[10px_15px_30px_rgba(0,0,0,0.7),_inset_1px_1px_3px_rgba(255,255,255,0.1)] h-full flex flex-col"
+              >
                 {/* Image Area */}
                 <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden mb-5 border-t border-l border-black/50 border-b border-r border-teal-700/50 shadow-[inset_2px_2px_10px_rgba(0,0,0,0.8)]">
                   <div className="absolute inset-0 bg-teal-950/20 group-hover:bg-transparent transition-colors duration-500 z-10 mix-blend-multiply" />
@@ -103,7 +106,7 @@ const Carousel = () => {
 
                   {/* Hover Overlay Button */}
                   <div className="absolute inset-0 bg-teal-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-center justify-center backdrop-blur-[2px]">
-                    <button 
+                    <button
                       onClick={() => navigate(`/product/${product.id}`)}
                       className="px-6 py-3 bg-teal-900/90 text-amber-400 font-bold rounded-xl border-t border-l border-teal-700 border-b border-r border-black shadow-[0_5px_15px_rgba(0,0,0,0.5)] flex items-center gap-2 hover:bg-gradient-to-br hover:from-amber-400 hover:to-yellow-600 hover:text-teal-950 hover:border-amber-200 hover:border-b-yellow-800 transition-all duration-300 translate-y-4 group-hover:translate-y-0"
                     >
@@ -139,7 +142,7 @@ const Carousel = () => {
                     <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-yellow-600 drop-shadow-[0_2px_3px_rgba(0,0,0,0.6)]">
                       ${product.price}
                     </span>
-                    <button 
+                    <button
                       onClick={() => addToCart(product)}
                       className="w-12 h-12 rounded-xl bg-teal-950 border-t border-l border-teal-800 border-b border-r border-black flex items-center justify-center text-amber-500 hover:text-emerald-100 hover:bg-teal-800 transition-all shadow-[inset_1px_1px_3px_rgba(0,0,0,0.8),_2px_3px_6px_rgba(0,0,0,0.4)] hover:shadow-[inset_1px_1px_2px_rgba(255,255,255,0.1),_4px_6px_10px_rgba(0,0,0,0.6)]"
                     >
