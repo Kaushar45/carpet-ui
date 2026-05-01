@@ -1,10 +1,17 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import WhatsAppChat from "./components/WhatsAppChat";
+import AIChatbot from "./components/AIChatbot";
 import { Outlet, useLocation } from "react-router-dom";
 
 function App() {
   const location = useLocation();
-  const authPaths = ["/login", "/signup", "/forgot-password", "/reset-password"];
+  const authPaths = [
+    "/login",
+    "/signup",
+    "/forgot-password",
+    "/reset-password",
+  ];
   const isAuthPage = authPaths.includes(location.pathname);
 
   return (
@@ -14,6 +21,8 @@ function App() {
         <Outlet />
       </main>
       {!isAuthPage && <Footer />}
+      <WhatsAppChat />
+      <AIChatbot />
     </div>
   );
 }
