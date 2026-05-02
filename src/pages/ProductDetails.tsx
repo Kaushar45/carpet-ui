@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Heart, ArrowLeft, Star, Ruler, MapPin, Layers } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
@@ -13,6 +13,16 @@ const ProductDetails = () => {
   const product = products.find(p => p.id === Number(id));
 
   const [mainImageLoaded, setMainImageLoaded] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(product?.images?.[0] || product?.image || '');
+  const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0] || { name: product?.dimensions || 'Standard', priceMultiplier: 1 });
+
+  useEffect(() => {
+    if (product) {
+      setSelectedImage(product.images?.[0] || product.image);
+      setSelectedSize(product.sizes?.[0] || { name: product.dimensions || 'Standard', priceMultiplier: 1 });
+      window.scrollTo(0, 0);
+    }
+  }, [product]);
 
   if (!product) {
     return (
@@ -71,7 +81,7 @@ const ProductDetails = () => {
                 </div>
               )}
               <img 
-                src={product.image} 
+                src={selectedImage} 
                 alt={product.name} 
                 onLoad={() => setMainImageLoaded(true)}
                 className={`w-full h-full object-cover transition-opacity duration-1000 ${mainImageLoaded ? 'opacity-100' : 'opacity-0'}`}
@@ -91,6 +101,24 @@ const ProductDetails = () => {
                 />
               </button>
             </motion.div>
+            
+            {/* Thumbnails */}
+            {product.images && product.images.length > 1 && (
+              <div className="flex gap-4 mt-2 overflow-x-auto pb-2 scrollbar-hide">
+                {product.images.map((img, idx) => (
+                  <button 
+                    key={idx}
+                    onClick={() => {
+                      setMainImageLoaded(false);
+                      setSelectedImage(img);
+                    }}
+                    className={`relative w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all ${selectedImage === img ? 'border-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.5)]' : 'border-teal-800 opacity-70 hover:opacity-100 hover:border-teal-600'}`}
+                  >
+                    <img src={img} alt={`${product.name} view ${idx + 1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Product Details Section */}
@@ -112,7 +140,7 @@ const ProductDetails = () => {
             
             <div className="flex items-center gap-6 mb-8">
               <p className="font-black text-amber-400 text-4xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                ${product.price}
+                ${Math.round(product.price * selectedSize.priceMultiplier)}
               </p>
               <div className="h-8 w-px bg-teal-700 mx-2"></div>
               <div className="flex flex-col">
@@ -127,9 +155,31 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            <p className="text-emerald-100/80 text-lg leading-relaxed mb-10 font-medium pb-8 border-b border-teal-800 border-dashed">
+            <p className="text-emerald-100/80 text-lg leading-relaxed mb-8 font-medium pb-8 border-b border-teal-800 border-dashed">
               {product.description || "A gorgeous artisanal rug completely handwoven to perfection."}
             </p>
+
+            {/* Size Options */}
+            {product.sizes && product.sizes.length > 0 && (
+              <div className="mb-8">
+                <h4 className="text-xs uppercase tracking-widest font-black text-emerald-100/50 mb-3">Select Size</h4>
+                <div className="flex flex-wrap gap-3">
+                  {product.sizes.map((size, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedSize(size)}
+                      className={`px-4 py-2 rounded-xl font-bold text-sm border transition-all ${
+                        selectedSize.name === size.name 
+                        ? 'bg-amber-400 text-teal-950 border-amber-400 shadow-[0_0_15px_rgba(251,191,36,0.4)]' 
+                        : 'bg-teal-900/50 text-emerald-100 border-teal-700 hover:border-amber-400/50'
+                      }`}
+                    >
+                      {size.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="grid grid-cols-2 gap-6 mb-12">
               <div className="bg-teal-950/50 p-5 rounded-2xl border border-teal-800 flex items-start gap-4">
@@ -138,7 +188,7 @@ const ProductDetails = () => {
                 </div>
                 <div>
                   <h4 className="text-xs uppercase tracking-widest font-black text-emerald-100/50 mb-1">Dimensions</h4>
-                  <p className="font-bold text-white tracking-wide">{product.dimensions || "Available in sizes"}</p>
+                  <p className="font-bold text-white tracking-wide">{selectedSize.name || product.dimensions}</p>
                 </div>
               </div>
 
@@ -167,7 +217,17 @@ const ProductDetails = () => {
               <motion.button 
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => addToCart(product)}
+                onClick={() => {
+                  const sizeIndex = product.sizes?.findIndex(s => s.name === selectedSize.name) || 0;
+                  const currentPrice = Math.round(product.price * selectedSize.priceMultiplier);
+                  addToCart({
+                    ...product,
+                    id: product.id + (sizeIndex > 0 ? sizeIndex * 1000 : 0),
+                    price: currentPrice,
+                    name: product.sizes && product.sizes.length > 0 ? `${product.name} (${selectedSize.name})` : product.name,
+                    image: selectedImage || product.image
+                  });
+                }}
                 className="flex-1 bg-gradient-to-br from-amber-400 to-yellow-600 text-teal-950 border-t border-l border-amber-200 border-b border-r border-yellow-800 shadow-[4px_10px_20px_rgba(0,0,0,0.6),_inset_2px_2px_5px_rgba(255,255,255,0.4)] rounded-2xl py-5 font-black text-lg uppercase tracking-widest flex items-center justify-center gap-3 transition-transform"
               >
                 <ShoppingCart className="w-6 h-6 drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]" /> 
@@ -196,6 +256,46 @@ const ProductDetails = () => {
             </div>
           </motion.div>
         </div>
+        
+        {/* Similar Products */}
+        {products.filter(p => p.category === product.category && p.id !== product.id).length > 0 && (
+          <div className="mt-24">
+            <div className="flex items-center gap-4 mb-10">
+              <h2 style={{ fontFamily: "'Playfair Display', serif" }} className="text-3xl md:text-4xl font-black text-white">
+                Similar Products
+              </h2>
+              <div className="h-px bg-teal-800 flex-1"></div>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {products
+                .filter(p => p.category === product.category && p.id !== product.id)
+                .slice(0, 4)
+                .map((similarProduct) => (
+                  <Link 
+                    key={similarProduct.id} 
+                    to={`/product/${similarProduct.id}`}
+                    className="group bg-teal-900/40 rounded-3xl p-4 border border-teal-800/50 hover:border-amber-400/30 transition-all hover:bg-teal-900/60 shadow-[4px_4px_10px_rgba(0,0,0,0.4)]"
+                  >
+                    <div className="aspect-[4/5] rounded-2xl overflow-hidden mb-4 relative">
+                      <img 
+                        src={similarProduct.image} 
+                        alt={similarProduct.name} 
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                    </div>
+                    <div className="flex justify-between items-start gap-2">
+                      <div>
+                        <h3 className="text-white font-bold text-lg mb-1">{similarProduct.name}</h3>
+                        <p className="text-emerald-100/60 text-xs font-bold uppercase tracking-widest">{similarProduct.category}</p>
+                      </div>
+                      <span className="text-amber-400 font-black">${similarProduct.price}</span>
+                    </div>
+                  </Link>
+                ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

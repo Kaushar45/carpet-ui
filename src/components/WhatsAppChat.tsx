@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send } from 'lucide-react';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MessageCircle, X, Send } from "lucide-react";
 
 const WhatsAppChat = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const phoneNumber = "917800826134"; // Number provided by user
+  const phoneNumber = "917800826134";
   const message = "Hello! I'm interested in your products.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
@@ -27,10 +27,14 @@ const WhatsAppChat = () => {
                   <MessageCircle size={24} className="text-emerald-400" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-base tracking-wide text-amber-50">MYRUGS Support</h3>
+                  <h3 className="font-bold text-base tracking-wide text-amber-50">
+                    MYRUGS Support
+                  </h3>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <p className="text-xs text-teal-200 font-medium">Online • Replies instantly</p>
+                    <p className="text-xs text-teal-200 font-medium">
+                      Online • Replies instantly
+                    </p>
                   </div>
                 </div>
               </div>
@@ -71,9 +75,24 @@ const WhatsAppChat = () => {
                 className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white py-3.5 px-4 rounded-xl font-semibold flex items-center justify-center gap-2.5 transition-all shadow-lg shadow-green-200/50 hover:shadow-green-300/60 hover:-translate-y-0.5 group"
                 onClick={() => setIsOpen(false)}
               >
-                <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="fill-current text-white group-hover:scale-110 transition-transform"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="22"
+                  height="22"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="fill-current text-white group-hover:scale-110 transition-transform"
+                >
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
                 Start Chat on WhatsApp
-                <Send size={16} className="ml-1 opacity-80 group-hover:translate-x-1 transition-transform" />
+                <Send
+                  size={16}
+                  className="ml-1 opacity-80 group-hover:translate-x-1 transition-transform"
+                />
               </a>
               <p className="text-center text-[10px] text-slate-400 mt-3 font-medium uppercase tracking-wider">
                 Secured by WhatsApp
@@ -112,7 +131,19 @@ const WhatsAppChat = () => {
               transition={{ duration: 0.2 }}
               className="flex items-center justify-center"
             >
-              <svg viewBox="0 0 24 24" width="34" height="34" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="fill-current text-white"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              <svg
+                viewBox="0 0 24 24"
+                width="34"
+                height="34"
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="fill-current text-white"
+              >
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
             </motion.div>
           )}
         </AnimatePresence>
@@ -120,7 +151,7 @@ const WhatsAppChat = () => {
         {/* Unread badge */}
         {!isOpen && (
           <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 border-2 border-white text-[10px] font-bold text-white shadow-sm">
-            1
+            0
           </span>
         )}
       </motion.button>

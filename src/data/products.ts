@@ -5,6 +5,18 @@ export const products = [
     category: "Persian", 
     price: 1299, 
     image: "https://images.unsplash.com/photo-1534889156217-d643df14f14a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", 
+    images: [
+      "https://images.unsplash.com/photo-1534889156217-d643df14f14a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1582582621959-48d27397dc69?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1600166898405-da9535204843?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    ],
+    sizes: [
+      { name: "5' x 8'", priceMultiplier: 0.6 },
+      { name: "8' x 10'", priceMultiplier: 1 },
+      { name: "9' x 12'", priceMultiplier: 1.4 },
+      { name: "10' x 14'", priceMultiplier: 1.8 }
+    ],
     rating: 5, 
     isNew: true,
     description: "A breathtaking masterpiece from central Iran, woven with luminous silk and fine kurk wool. The intricate central medallion pattern is surrounded by a dense field of Shah Abbasi floral motifs, utilizing brilliant indigo, crimson, and ivory hues. Perfect for elevating formal living spaces.",
@@ -18,6 +30,17 @@ export const products = [
     category: "Modern", 
     price: 499, 
     image: "https://images.unsplash.com/photo-1596401053423-f3c5b967d716?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", 
+    images: [
+      "https://images.unsplash.com/photo-1596401053423-f3c5b967d716?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1600166898405-da9535204843?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1582582621959-48d27397dc69?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    ],
+    sizes: [
+      { name: "4' x 6'", priceMultiplier: 0.7 },
+      { name: "5' x 8'", priceMultiplier: 1 },
+      { name: "8' x 10'", priceMultiplier: 1.6 }
+    ],
     rating: 4, 
     isNew: false,
     description: "Embrace minimalist Scandinavian aesthetics with this textured geometric rug. The neutral cream and charcoal palette seamlessly blends into contemporary interiors while providing a plush underfoot experience through its high-pile density.",
@@ -31,6 +54,17 @@ export const products = [
     category: "Runner", 
     price: 349, 
     image: "https://images.unsplash.com/photo-1543854589-32867c295ce8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", 
+    images: [
+      "https://images.unsplash.com/photo-1543854589-32867c295ce8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1596401053423-f3c5b967d716?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1534889156217-d643df14f14a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    ],
+    sizes: [
+      { name: "2.5' x 8'", priceMultiplier: 0.7 },
+      { name: "2.5' x 12'", priceMultiplier: 1 },
+      { name: "3' x 15'", priceMultiplier: 1.5 }
+    ],
     rating: 5, 
     isNew: false,
     description: "Bring the vibrant souks of Morocco to your hallway. Hand-knotted by Berber artisans in the Atlas Mountains, this runner features diamond lozenge patterns and rich terracotta backgrounds. Incredibly durable for high-traffic corridors.",
@@ -44,6 +78,17 @@ export const products = [
     category: "Vintage", 
     price: 899, 
     image: "https://images.unsplash.com/photo-1582582621959-48d27397dc69?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", 
+    images: [
+      "https://images.unsplash.com/photo-1582582621959-48d27397dc69?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1534889156217-d643df14f14a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1600166898405-da9535204843?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    ],
+    sizes: [
+      { name: "6' x 9'", priceMultiplier: 0.7 },
+      { name: "9' x 12'", priceMultiplier: 1 },
+      { name: "10' x 14'", priceMultiplier: 1.3 }
+    ],
     rating: 5, 
     isNew: true,
     description: "A genuine semi-antique Turkish Oushak with a wonderfully muted, sun-faded palette of sage greens, dusty roses, and pale golds. The larger-scale, relaxed geometric motifs make this rug highly sought-after by modern interior designers.",
@@ -57,6 +102,17 @@ export const products = [
     category: "Vintage", 
     price: 650, 
     image: "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", 
+    images: [
+      "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1582582621959-48d27397dc69?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1543854589-32867c295ce8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1600166898405-da9535204843?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    ],
+    sizes: [
+      { name: "4' x 6'", priceMultiplier: 0.6 },
+      { name: "6' x 9'", priceMultiplier: 1 },
+      { name: "8' x 10'", priceMultiplier: 1.4 }
+    ],
     rating: 4, 
     isNew: false,
     description: "Characterized by its bold, tribal stepped medallions and vibrant abrash (natural color variations). This Anatolian piece is full of rustic charm and character, perfect for bohemian or eclectic living rooms.",
@@ -70,6 +126,17 @@ export const products = [
     category: "Modern", 
     price: 299, 
     image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", 
+    images: [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1596401053423-f3c5b967d716?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://plus.unsplash.com/premium_photo-1673827409418-508b9cd2aa4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1600166898405-da9535204843?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    ],
+    sizes: [
+      { name: "5' x 8'", priceMultiplier: 0.8 },
+      { name: "8' x 10'", priceMultiplier: 1 },
+      { name: "9' x 12'", priceMultiplier: 1.5 }
+    ],
     rating: 4, 
     isNew: false,
     description: "Understated elegance meets ultimate comfort. A solid, deep-pile rug that creates an inviting, serene foundation for any bedroom or lounge area. Features a subtle sheen that reflects natural light beautifully.",
@@ -83,6 +150,17 @@ export const products = [
     category: "Persian", 
     price: 1550, 
     image: "https://images.unsplash.com/photo-1600166898405-da9535204843?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", 
+    images: [
+      "https://images.unsplash.com/photo-1600166898405-da9535204843?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1534889156217-d643df14f14a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1582582621959-48d27397dc69?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    ],
+    sizes: [
+      { name: "8' x 10'", priceMultiplier: 0.7 },
+      { name: "10' x 14'", priceMultiplier: 1 },
+      { name: "12' x 16'", priceMultiplier: 1.4 }
+    ],
     rating: 5, 
     isNew: false,
     description: "Renowned as the 'Iron Rugs of Iran', this Heriz features an angular, majestic eight-sided medallion on a rich madder red ground. Built to last generations, it adds immediate authority and warmth to dining rooms or libraries.",
@@ -96,6 +174,17 @@ export const products = [
     category: "Outdoor", 
     price: 150, 
     image: "https://plus.unsplash.com/premium_photo-1673827409418-508b9cd2aa4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80", 
+    images: [
+      "https://plus.unsplash.com/premium_photo-1673827409418-508b9cd2aa4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1596401053423-f3c5b967d716?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1582582621959-48d27397dc69?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    ],
+    sizes: [
+      { name: "3' x 5'", priceMultiplier: 0.6 },
+      { name: "5' x 8'", priceMultiplier: 1 },
+      { name: "8' x 10'", priceMultiplier: 1.8 }
+    ],
     rating: 3, 
     isNew: true,
     description: "An incredibly versatile, eco-friendly natural fiber rug. The tightly braided jute offers exceptional durability for patios, sunrooms, or coastal-inspired living spaces, mixing well with casual furnishings.",
