@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Star, ShoppingBag } from "lucide-react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../context/StoreContext";
+import { useAuth } from "../context/AuthContext";
 import { products } from "../data/products";
 
 const carouselProducts = products.slice(0, 5);
@@ -11,6 +12,7 @@ const Carousel = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { addToCart } = useStore();
+  const { isAuthenticated } = useAuth();
 
   const scrollLeft = () => {
     if (carouselRef.current) {
@@ -143,7 +145,13 @@ const Carousel = () => {
                       ${product.price}
                     </span>
                     <button
-                      onClick={() => addToCart(product)}
+                      onClick={() => {
+                        if (!isAuthenticated) {
+                          navigate('/login');
+                          return;
+                        }
+                        addToCart(product);
+                      }}
                       className="w-12 h-12 rounded-xl bg-teal-950 border-t border-l border-teal-800 border-b border-r border-black flex items-center justify-center text-amber-500 hover:text-emerald-100 hover:bg-teal-800 transition-all shadow-[inset_1px_1px_3px_rgba(0,0,0,0.8),_2px_3px_6px_rgba(0,0,0,0.4)] hover:shadow-[inset_1px_1px_2px_rgba(255,255,255,0.1),_4px_6px_10px_rgba(0,0,0,0.6)]"
                     >
                       <ShoppingBag className="w-5 h-5" />

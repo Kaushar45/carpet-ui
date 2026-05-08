@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
     // Handle login simulation
     console.log("Login:", { email, password });
-    login();
+    login(email);
     navigate("/");
   };
 

@@ -37,6 +37,7 @@ interface StoreContextType {
   addToWishlist: (product: Product) => void;
   removeFromWishlist: (id: number) => void;
   isInWishlist: (id: number) => boolean;
+  clearCartAndWishlist: () => void;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -109,10 +110,15 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     return wishlist.some(item => item.id === id);
   };
 
+  const clearCartAndWishlist = () => {
+    setCartItems([]);
+    setWishlist([]);
+  };
+
   return (
     <StoreContext.Provider value={{
       cartItems, addToCart, removeFromCart, updateQuantity, cartTotal, cartCount, isCartOpen, setIsCartOpen,
-      wishlist, addToWishlist, removeFromWishlist, isInWishlist
+      wishlist, addToWishlist, removeFromWishlist, isInWishlist, clearCartAndWishlist
     }}>
       {children}
     </StoreContext.Provider>

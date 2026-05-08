@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Filter, ChevronDown, Star, ShoppingCart, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../context/StoreContext';
+import { useAuth } from '../context/AuthContext';
 import { products } from '../data/products';
 
 const categories = ["All", "Persian", "Modern", "Vintage", "Runner", "Outdoor"];
@@ -11,6 +12,7 @@ const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("Recommended");
   const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useStore();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   let filteredProducts = selectedCategory === "All" 
@@ -27,6 +29,10 @@ const Shop = () => {
 
   const toggleWishlist = (product: any, e: React.MouseEvent) => {
     e.stopPropagation();
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
     if (isInWishlist(product.id)) {
       removeFromWishlist(product.id);
     } else {
@@ -151,11 +157,14 @@ const Shop = () => {
                         NEW
                       </div>
                     )}
-                    {/* Quick Add Overlay */}
                     <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300 z-10">
                       <button 
                         onClick={(e) => {
                           e.stopPropagation();
+                          if (!isAuthenticated) {
+                            navigate('/login');
+                            return;
+                          }
                           addToCart(product);
                         }}
                         className="w-full bg-gradient-to-br from-amber-400 to-yellow-600 text-teal-950 border-t border-l border-amber-200 border-b border-r border-yellow-800 shadow-[4px_4px_15px_rgba(0,0,0,0.6),_inset_2px_2px_5px_rgba(255,255,255,0.4)] rounded-xl py-3.5 font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-transform"

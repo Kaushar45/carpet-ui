@@ -2,9 +2,11 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, Heart, ArrowRight, Star, Trash2 } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
+import { useAuth } from '../context/AuthContext';
 
 const Wishlist = () => {
   const { wishlist, removeFromWishlist, addToCart } = useStore();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -84,7 +86,14 @@ const Wishlist = () => {
                   <div className="mt-auto flex items-center justify-between">
                     <p className="font-black text-amber-400 text-xl drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">${product.price}</p>
                     <button 
-                      onClick={(e) => { e.stopPropagation(); addToCart(product); }}
+                      onClick={(e) => { 
+                        e.stopPropagation(); 
+                        if (!isAuthenticated) {
+                          navigate('/login');
+                          return;
+                        }
+                        addToCart(product); 
+                      }}
                       className="p-3 bg-teal-950 text-amber-500 rounded-xl hover:text-emerald-100 hover:bg-teal-800 border-t border-l border-teal-800 border-b border-r border-black shadow-[inset_1px_1px_3px_rgba(0,0,0,0.8),_2px_3px_6px_rgba(0,0,0,0.4)] hover:shadow-[inner_light_teal] active:scale-95 transition-all"
                     >
                       <ShoppingCart className="w-5 h-5" />

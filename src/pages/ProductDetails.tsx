@@ -3,12 +3,14 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Heart, ArrowLeft, Star, Ruler, MapPin, Layers } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
+import { useAuth } from '../context/AuthContext';
 import { products } from '../data/products';
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { addToCart, addToWishlist, removeFromWishlist, isInWishlist } = useStore();
+  const { isAuthenticated } = useAuth();
 
   const product = products.find(p => p.id === Number(id));
 
@@ -41,6 +43,10 @@ const ProductDetails = () => {
   const inWishlist = isInWishlist(product.id);
 
   const toggleWishlist = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
     if (inWishlist) {
       removeFromWishlist(product.id);
     } else {
@@ -218,6 +224,10 @@ const ProductDetails = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => {
+                  if (!isAuthenticated) {
+                    navigate('/login');
+                    return;
+                  }
                   const sizeIndex = product.sizes?.findIndex(s => s.name === selectedSize.name) || 0;
                   const currentPrice = Math.round(product.price * selectedSize.priceMultiplier);
                   addToCart({
